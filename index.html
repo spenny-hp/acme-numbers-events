@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Acme Number and Events</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: black;
+        }
+        div {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        button {
+            width: 150px;
+            height: 100px;
+            font-size: xx-large;
+        }
+        p {
+            font-size: x-large;
+            padding: 0.05rem;
+        }
+        span {
+            font-size: xx-large;
+            padding: 0.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>
+            Acme Numbers and Events
+        </h1>
+    </div>
+    <div>
+        <button id='button'>
+            +
+        </button>
+    </div>
+    <div>
+        <p id='average'>
+
+        </p>
+    </div>
+    <div id='randoms'>
+
+    </div>
+    <script>
+        function generateNumber() {
+            const randoms = document.getElementById('randoms');
+            const newNum = document.createElement('span');
+            newNum.innerHTML = Math.ceil(Math.random() * 100);
+            randoms.appendChild(newNum);
+        }
+
+        const numBtn = document.getElementById('button');
+        numBtn.addEventListener('click', generateNumber);
+
+        function removeNum(event) {
+            const num = event.target;
+            if (num.tagName === 'SPAN') {
+                num.remove();
+            }
+        }
+
+        document.addEventListener('click', removeNum);
+
+        function getAverage() {
+            const numberSpans = [...document.getElementsByTagName('span')];
+            const numbers = numberSpans.map(num => num.innerHTML);
+            const average = document.getElementById('average');
+            const avg = numbers.reduce((acc, val) => acc + val/(numbers.length), 0);
+            if (numbers.length > 0) {
+                average.innerHTML = `The average of all the numbers is ${avg}`;
+            } else {
+                average.innerHTML = '';
+            }
+        }
+
+        document.addEventListener('click', getAverage);
+
+    </script>
+</body>
+</html>
